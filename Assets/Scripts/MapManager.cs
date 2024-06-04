@@ -26,7 +26,24 @@ public class MapManager : MonoBehaviour
     {
         Vector3Int centerTile = new Vector3Int(width / 2, height / 2, 0);
 
-        BoundsInt wallBounds = new BoundsInt(new Vector)
+        BoundsInt wallBounds = new BoundsInt(new Vector3Int(29, 28, 0), new Vector3Int(3, 1 , 0));
+
+        for (int x = 0; x < wallBounds.size.x; x++)
+        {
+           for (int y = 0; y < wallBounds.size.y; y++)
+            {
+                Vector3Int wallTilePosition = new Vector3Int(wallBounds.min.x + x, wallBounds.min.y + y, 0);
+                obstacleMap.SetTile(wallTilePosition, wallTile);
+            }
+        }
+
+        Instantiate(Resources.Load<GameObject>("Player"), new Vector3(40 + 0.5f, 25 + 0.5f, 0), Quaternion.identity).name = "Player";
+        Instantiate(Resources.Load<GameObject>("NPC"), new Vector3(40 - 5.5f, 25 + 0.5f, 0), Quaternion.identity).name = "NPC";
+
+        Camera.main.transform.position = new Vector3(40, 20.25f - 10);
+        Camera.main.orthographicSize = 27;
     }
 
+    // return true if x and y are within the bounds of the map
+    public bool inBounds(int x, int y) => 0 <= x && x < width && 0 <= y && y < height;
 }
